@@ -1,4 +1,23 @@
+import PropTypes from 'prop-types';
 import './calculator.css';
+
+function Button(props) {
+  const { digit, className } = props;
+  return (
+    <button type="button" className={className}>
+      {digit}
+    </button>
+  );
+}
+
+Button.propTypes = {
+  digit: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
+
+Button.defaultProps = {
+  className: '',
+};
 
 function Calculator() {
   return (
@@ -7,37 +26,25 @@ function Calculator() {
         <div className="previous-operand">1234+</div>
         <div className="current-operand">1234</div>
       </div>
-      <button type="button">AC</button>
-      <button type="button">+/-</button>
-      <button type="button">%</button>
-      <button type="button" className="colored">
-        ÷
-      </button>
-      <button type="button">7</button>
-      <button type="button">8</button>
-      <button type="button">9</button>
-      <button type="button" className="colored">
-        ×
-      </button>
-      <button type="button">4</button>
-      <button type="button">5</button>
-      <button type="button">6</button>
-      <button type="button" className="colored">
-        -
-      </button>
-      <button type="button">1</button>
-      <button type="button">2</button>
-      <button type="button">3</button>
-      <button type="button" className="colored">
-        +
-      </button>
-      <button type="button" className="span-two">
-        0
-      </button>
-      <button type="button">.</button>
-      <button type="button" className="colored">
-        =
-      </button>
+      <Button type="button" digit="AC" />
+      <Button type="button" digit="+/-" />
+      <Button type="button" digit="%" />
+      <Button type="button" digit="÷" className="colored" />
+      <Button type="button" digit="7" />
+      <Button type="button" digit="8" />
+      <Button type="button" digit="9" />
+      <Button type="button" digit="×" className="colored" />
+      <Button type="button" digit="4" />
+      <Button type="button" digit="5" />
+      <Button type="button" digit="6" />
+      <Button type="button" digit="-" className="colored" />
+      <Button type="button" digit="1" />
+      <Button type="button" digit="2" />
+      <Button type="button" digit="3" />
+      <Button type="button" digit="+" className="colored" />
+      <Button type="button" digit="0" className="span-two" />
+      <Button type="button" digit="." />
+      <Button type="button" digit="=" className="colored" />
     </div>
   );
 }
