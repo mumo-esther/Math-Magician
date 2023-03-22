@@ -72,7 +72,7 @@ function Calculator() {
   };
 
   const handlePercentageClick = () => {
-    setCurrentOperand(Big(currentOperand).div(100).toString());
+    setCurrentOperand(Big(currentOperand).mod(100).toString());
   };
 
   return (
