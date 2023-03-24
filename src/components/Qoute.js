@@ -11,7 +11,7 @@ const Quote = () => {
           'https://api.api-ninjas.com/v1/quotes?category=dreams',
           {
             headers: {
-              'x-api-key': 'vy41OH8oq8B6h6OHdcoEH8vxYO09L1bL1q5SVOX3',
+              'x-api-key': 'bNenrhJqkrfUy8dcqXv9No8xpp6ugcy5KNvllLDQ',
             },
           },
         );
