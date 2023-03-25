@@ -1,138 +1,37 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import './calculator.css';
-import Big from 'big.js';
-import operate from '../logic/operate';
-
-function Button(props) {
-  const { digit, className, handleClick } = props;
-  return (
-    <button
-      type="button"
-      className={className}
-      onClick={() => handleClick(digit)}
-    >
-      {digit}
-    </button>
-  );
-}
-
-Button.propTypes = {
-  digit: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  handleClick: PropTypes.func.isRequired,
-};
-
-Button.defaultProps = {
-  className: '',
-};
+import calculate from '../logic/calculate';
 
 function Calculator() {
-  const [previousOperand, setPreviousOperand] = useState('');
-  const [currentOperand, setCurrentOperand] = useState('0');
-  const [operation, setOperation] = useState('');
-
-  const handleDigitClick = (digit) => {
-    if (digit === '.' && currentOperand.includes('.')) return;
-    if (currentOperand === '0' && digit !== '.') {
-      setCurrentOperand(digit);
-    } else {
-      setCurrentOperand(currentOperand + digit);
-    }
+  const [state, setState] = useState({ total: null, next: null, operation: null });
+  const handleClick = (buttonName) => {
+    const newState = calculate(state, buttonName);
+    setState(newState);
   };
-
-  const handleOperationClick = (operation) => {
-    if (previousOperand === '') {
-      setPreviousOperand(currentOperand);
-      setCurrentOperand('0');
-      setOperation(operation);
-    } else {
-      const result = operate(previousOperand, currentOperand, operation);
-      setPreviousOperand(result);
-      setCurrentOperand('0');
-      setOperation(operation);
-    }
-  };
-
-  const handleEqualsClick = () => {
-    const result = operate(previousOperand, currentOperand, operation);
-    setPreviousOperand('');
-    setCurrentOperand(result);
-    setOperation('');
-  };
-
-  const handleAllClearClick = () => {
-    setPreviousOperand('');
-    setCurrentOperand('0');
-    setOperation('');
-  };
-
-  const handleNegateClick = () => {
-    setCurrentOperand(Big(currentOperand).times(-1).toString());
-  };
-
-  const handlePercentageClick = () => {
-    setCurrentOperand(Big(currentOperand).mod(100).toString());
-  };
-
   return (
     <div className="calculator-grid">
       <div className="output">
-        <div className="previous-operand">
-          {previousOperand}
-          {operation}
-        </div>
-        <div className="current-operand">{currentOperand}</div>
+        <div className="current-operand">{state.next || state.total || '0'}</div>
       </div>
-      <Button type="button" digit="AC" handleClick={handleAllClearClick} />
-      <Button type="button" digit="+/-" handleClick={handleNegateClick} />
-      <Button type="button" digit="%" handleClick={handlePercentageClick} />
-      <Button
-        type="button"
-        digit="÷"
-        className="colored"
-        handleClick={handleOperationClick}
-      />
-      <Button type="button" digit="7" handleClick={handleDigitClick} />
-      <Button type="button" digit="8" handleClick={handleDigitClick} />
-      <Button type="button" digit="9" handleClick={handleDigitClick} />
-      <Button
-        type="button"
-        digit="x"
-        className="colored"
-        handleClick={handleOperationClick}
-      />
-      <Button type="button" digit="4" handleClick={handleDigitClick} />
-      <Button type="button" digit="5" handleClick={handleDigitClick} />
-      <Button type="button" digit="6" handleClick={handleDigitClick} />
-      <Button
-        type="button"
-        digit="-"
-        className="colored"
-        handleClick={handleOperationClick}
-      />
-      <Button type="button" digit="1" handleClick={handleDigitClick} />
-      <Button type="button" digit="2" handleClick={handleDigitClick} />
-      <Button type="button" digit="3" handleClick={handleDigitClick} />
-      <Button
-        type="button"
-        digit="+"
-        className="colored"
-        handleClick={handleOperationClick}
-      />
-      <Button
-        type="button"
-        digit="0"
-        className="span-two"
-        handleClick={handleDigitClick}
-      />
-      <Button type="button" digit="." handleClick={handleDigitClick} />
-      <Button
-        type="button"
-        digit="="
-        className="colored"
-        handleClick={handleEqualsClick}
-      />
+      <button type="button" onClick={() => handleClick('AC')}>AC</button>
+      <button type="button" onClick={() => handleClick('+/-')}>+/-</button>
+      <button type="button" onClick={() => handleClick('%')}>%</button>
+      <button type="button" className="colored" onClick={() => handleClick('÷')}>÷</button>
+      <button type="button" onClick={() => handleClick('7')}>7</button>
+      <button type="button" onClick={() => handleClick('8')}>8</button>
+      <button type="button" onClick={() => handleClick('9')}>9</button>
+      <button type="button" className="colored" onClick={() => handleClick('x')}>x</button>
+      <button type="button" onClick={() => handleClick('4')}>4</button>
+      <button type="button" onClick={() => handleClick('5')}>5</button>
+      <button type="button" onClick={() => handleClick('6')}>6</button>
+      <button type="button" className="colored" onClick={() => handleClick('-')}>-</button>
+      <button type="button" onClick={() => handleClick('1')}>1</button>
+      <button type="button" onClick={() => handleClick('2')}>2</button>
+      <button type="button" onClick={() => handleClick('3')}>3</button>
+      <button type="button" className="colored" onClick={() => handleClick('+')}>+</button>
+      <button type="button" className="span-two" onClick={() => handleClick('0')}>0</button>
+      <button type="button" onClick={() => handleClick('.')}>.</button>
+      <button type="button" className="colored" onClick={() => handleClick('=')}>=</button>
     </div>
   );
 }
