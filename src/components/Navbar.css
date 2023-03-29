@@ -7,13 +7,13 @@ body {
 }
 
 .nav {
-  margin-top: 20px;
-  color: blue;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
-  padding: 0 1rem;
+  padding: 0 3rem;
+  background-color: white;
+  height: 50px;
 }
 
 .nav ul {
@@ -26,7 +26,7 @@ body {
 }
 
 .nav a {
-  color: inherit;
+  color: black;
 }
 
 .title {
