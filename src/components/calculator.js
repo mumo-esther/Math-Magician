@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import './calculator.css';
-import Big from 'big.js';
-import operate from '../logic/operate';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import "./calculator.css";
+import Big from "big.js";
+import calculate from "../logic/operate";
+import operate from "../logic/operate";
 
 function Button(props) {
   const { digit, className, handleClick } = props;
@@ -24,17 +25,17 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  className: '',
+  className: "",
 };
 
 function Calculator() {
-  const [previousOperand, setPreviousOperand] = useState('');
-  const [currentOperand, setCurrentOperand] = useState('0');
-  const [operation, setOperation] = useState('');
+  const [previousOperand, setPreviousOperand] = useState("");
+  const [currentOperand, setCurrentOperand] = useState("0");
+  const [operation, setOperation] = useState("");
 
   const handleDigitClick = (digit) => {
-    if (digit === '.' && currentOperand.includes('.')) return;
-    if (currentOperand === '0' && digit !== '.') {
+    if (digit === "." && currentOperand.includes(".")) return;
+    if (currentOperand === "0" && digit !== ".") {
       setCurrentOperand(digit);
     } else {
       setCurrentOperand(currentOperand + digit);
@@ -42,37 +43,45 @@ function Calculator() {
   };
 
   const handleOperationClick = (operation) => {
-    if (previousOperand === '') {
+    if (previousOperand === "") {
       setPreviousOperand(currentOperand);
-      setCurrentOperand('0');
+      setCurrentOperand("0");
       setOperation(operation);
     } else {
-      const result = operate(previousOperand, currentOperand, operation);
+      let result;
+      if (operation === "%") {
+        result = Big(previousOperand).mod(Big(currentOperand)).toString();
+      } else {
+        result = operate(previousOperand, currentOperand, operation);
+      }
       setPreviousOperand(result);
-      setCurrentOperand('0');
+      setCurrentOperand("0");
       setOperation(operation);
     }
   };
 
   const handleEqualsClick = () => {
     const result = operate(previousOperand, currentOperand, operation);
-    setPreviousOperand('');
+    setPreviousOperand("");
     setCurrentOperand(result);
-    setOperation('');
+    setOperation("");
   };
 
   const handleAllClearClick = () => {
-    setPreviousOperand('');
-    setCurrentOperand('0');
-    setOperation('');
+    setPreviousOperand("");
+    setCurrentOperand("0");
+    setOperation("");
   };
 
   const handleNegateClick = () => {
     setCurrentOperand(Big(currentOperand).times(-1).toString());
   };
 
-  const handlePercentageClick = () => {
-    setCurrentOperand(Big(currentOperand).mod(100).toString());
+  const handleModuloClick = () => {
+    const result = Big(previousOperand).mod(Big(currentOperand)).toString();
+    setPreviousOperand("");
+    setCurrentOperand(result);
+    setOperation("");
   };
 
   return (
@@ -86,7 +95,7 @@ function Calculator() {
       </div>
       <Button type="button" digit="AC" handleClick={handleAllClearClick} />
       <Button type="button" digit="+/-" handleClick={handleNegateClick} />
-      <Button type="button" digit="%" handleClick={handlePercentageClick} />
+      <Button type="button" digit="%" handleClick={handleModuloClick} />
       <Button
         type="button"
         digit="÷"
