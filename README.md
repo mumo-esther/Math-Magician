@@ -56,7 +56,7 @@ To get a local copy up and running follow these simple example steps.
 
 - IDE to edit and run the code (We use Visual Studio Code 🔥).
 - [Node.js](https://nodejs.org/en/download/) already downloaded.
-- Create React App - [click here to getting started](https://create-react-app.dev/docs/getting-started/).
+- Create React App - [click here to getting started](https://create-react-app.dev/docs/getting-started).
 
 ### Setup
 
