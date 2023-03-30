@@ -1,22 +1,22 @@
 import operate from './operate';
 
 describe('operate function', () => {
-  it('should add two numbers', () => {
-    const result = operate('2', '3', '+');
-    expect(result).toBe('5');
+  it('should add two numbers and return the correct value', () => {
+    const result = operate('7', '3', '+');
+    expect(result).toBe('10');
   });
 
-  it('should subtract two numbers', () => {
+  it('should subtract two numbers and return the correct value', () => {
     const result = operate('5', '3', '-');
     expect(result).toBe('2');
   });
 
-  it('should multiply two numbers', () => {
+  it('should multiply two numbers and return the correct value', () => {
     const result = operate('2', '3', 'x');
     expect(result).toBe('6');
   });
 
-  it('should divide two numbers', () => {
+  it('should divide two numbers and return the correct value', () => {
     const result = operate('6', '3', '÷');
     expect(result).toBe('2');
   });
